@@ -159,7 +159,7 @@ nm_connection_setup() {
 
 usb_setup
 ip_setup
-dhcpd_start
 nm_connection_setup
+dhcpd_start
 
 exit $?
