@@ -145,8 +145,21 @@ dhcpd_start() {
     dhcpd -f -4 -q -cf /etc/hybris-usb/dhcpd.conf -pf /run/hybris-usb/dhcpd4.pid -lf /run/hybris-usb/dhcpd4.lease
 }
 
+nm_connection_setup() {
+    local CON_NAME="USB Tethering"
+
+    if nmcli con show | grep -q "$CON_NAME"; then
+        nmcli con delete "$CON_NAME"
+    fi
+
+    nmcli con add type ethernet con-name "$CON_NAME" ifname "$USB_IFACE" ip4 $LOCAL_IP/24
+    nmcli con mod "$CON_NAME" connection.autoconnect yes
+    nmcli con up "$CON_NAME"
+}
+
 usb_setup
 ip_setup
 dhcpd_start
+nm_connection_setup
 
 exit $?
