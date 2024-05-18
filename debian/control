@@ -12,6 +12,7 @@ Package: hybris-usb
 Architecture: all
 Depends: isc-dhcp-server,
          net-tools,
+         ethtool,
          ${shlibs:Depends},
          ${misc:Depends}
 Description: USB control for Android with hybris

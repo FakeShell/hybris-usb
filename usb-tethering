@@ -129,6 +129,8 @@ ip_setup() {
         ifconfig usb0 $LOCAL_IP && USB_IFACE=usb0
     fi
 
+    [ -e "/usr/sbin/ethtool" ] && ethtool --offload "$USB_IFACE" scatter-gather off
+
     if [ -z "$USB_IFACE" ]; then
         usb_info "could not setup USB tethering!"
         systemd-notify --ready --status="could not setup USB tethering!"
